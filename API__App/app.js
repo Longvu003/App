@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { MongoClient } = require("mongodb");
 const ProductRoute = require("./Routes/ProductRoutes");
+const CategoryRoute = require("./Routes/CategoryRoute");
+const UserRoute = require("./Routes/UserRoute");
 const mongoose = require("mongoose");
 // Creating express object
 const app = express();
@@ -17,6 +19,8 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/products", ProductRoute);
+app.use("/Categories", CategoryRoute);
+app.use("/Users", UserRoute);
 const uri =
   "mongodb+srv://hailongvu552:121004@cluster0.0p1ed.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 

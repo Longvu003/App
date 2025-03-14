@@ -1,4 +1,3 @@
-const { error } = require("console");
 const ProductModel = require("../Models/ProductModel");
 
 const addProduct = async (
@@ -31,7 +30,7 @@ const addProduct = async (
 
 const getProduct = async () => {
   try {
-    const item = await ProductModel.find({});
+    const item = await ProductModel.find();
     return item;
   } catch (error) {
     console.log(error);
