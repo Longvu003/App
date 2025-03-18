@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { type } = require("os");
 const Schema = mongoose.Schema;
 
 const ProductModel = new Schema({
@@ -9,8 +8,11 @@ const ProductModel = new Schema({
   quantitySold: { type: Number },
   description: { type: String },
   img: { type: Array },
+  Idcategory: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
   timeProduct: { type: Date, default: Date.now },
   isDeleted: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("product", ProductModel);
+module.exports = mongoose.model("Product", ProductModel);

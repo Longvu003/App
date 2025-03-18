@@ -1,4 +1,3 @@
-const { error } = require("console");
 const ProductModel = require("../Models/ProductModel");
 
 const addProduct = async (
@@ -31,37 +30,28 @@ const addProduct = async (
 
 const getProduct = async () => {
   try {
-    const item = await ProductModel.find({});
+    const item = await ProductModel.find({ isDeleted: false });
     return item;
   } catch (error) {
     console.log(error);
   }
 };
 
-const updateProduct = async (
-  idProduct,
-  nameProduct,
-  description,
-  img,
-  priceProduct,
-  quantityProduct,
-  quantitySold
-) => {
+const updateProduct = async (idProduct, updateFields) => {
   try {
     const product = await ProductModel.findOne({ _id: idProduct });
     if (!product) {
       return { error: true, message: "Sản phẩm không tồn tại!" };
     }
-    const checkProduct = await ProductModel.findOne({ nameProduct });
-    if (checkProduct && checkProduct._id.toString() !== idProduct) {
-      return { error: true, message: "Sản phẩm đã tồn tại!" };
+    if (updateFields.nameProduct) {
+      const checkProduct = await ProductModel.findOne({
+        nameProduct: updateFields.nameProduct,
+      });
+      if (checkProduct && checkProduct._id.toString() !== idProduct) {
+        return { error: true, message: "Sản phẩm đã tồn tại!" };
+      }
     }
-    product.nameProduct = nameProduct;
-    product.description = description;
-    product.img = img;
-    product.priceProduct = priceProduct;
-    product.quantityProduct = quantityProduct;
-    product.quantitySold = quantitySold;
+    Object.assign(product, updateFields);
     await product.save();
     return product;
   } catch (error) {
