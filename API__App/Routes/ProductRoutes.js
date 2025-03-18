@@ -45,23 +45,10 @@ router.get("/getProduct", async (req, res) => {
 
 router.put("/updateProduct", async (req, res) => {
   try {
-    const {
-      idProduct,
-      nameProduct,
-      description,
-      img,
-      priceProduct,
-      quantityProduct,
-      quantitySold,
-    } = req.body;
+    const { idProduct, ...updatedFields } = req.body;
     const item = await productController.updateProduct(
       idProduct,
-      nameProduct,
-      description,
-      img,
-      priceProduct,
-      quantityProduct,
-      quantitySold
+      updatedFields
     );
     if (!item) {
       return res

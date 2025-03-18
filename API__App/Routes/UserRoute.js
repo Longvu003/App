@@ -3,10 +3,10 @@ const route = express.Router();
 const UserController = require("../Controller/UserController");
 route.post("/Signup", async (req, res) => {
   try {
-    const { userName, numberPhone, Email, password } = req.body;
+    const { Email, password } = req.body;
     const user = await UserController.SignUp(
-      userName,
-      numberPhone,
+      // userName,
+      // numberPhone,
       Email,
       password
     );
@@ -64,4 +64,6 @@ route.get("/getUser", async (req, res) => {
     return res.status(500).json({ message: "lỗi Sever !" });
   }
 });
+
+route.put("/updateUser", UserController.updateUser);
 module.exports = route;

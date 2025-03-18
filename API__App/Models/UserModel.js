@@ -5,7 +5,6 @@ const User = new Schema({
   userName: { type: String },
   numberPhone: {
     type: String,
-    required: [true, "Số điện thoại không được để trống"],
     unique: true,
     match: [/^(0|\+84)[3-9][0-9]{8,9}$/, "Số điện thoại không hợp lệ"],
   },
@@ -18,7 +17,7 @@ const User = new Schema({
   Address: { type: Array },
   password: {
     type: String,
-    minlength: [8, "Mật khẩu phải có ít nhất 6 ký tự"],
+    minlength: [8, "Mật khẩu phải có ít nhất 8 ký tự"],
   },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

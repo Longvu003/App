@@ -10,28 +10,12 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
-import {useState, useEffect} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 const HEIGHT__SCREEN = Dimensions.get('screen').height;
 const WIDTH__SCREEN = Dimensions.get('screen').width;
-import ipconfig from '../IpApp';
-import axios from 'axios';
+import useCallItem from '../Hooks/useCallItem';
 const HomeScreen = ({navigation}) => {
-  const [products, setProducts] = useState([]);
-  const getAllProduct = async () => {
-    try {
-      const respone = await axios.get(`${ipconfig}/products/getProduct`);
-      if (respone.status === 200) {
-        setProducts(respone.data.item);
-      } else {
-        Alert.alert('Có lỗi khi lấy data');
-      }
-    } catch (error) {
-      console.log('Lỗi nè', error);
-    }
-  };
-  useEffect(() => {
-    getAllProduct();
-  }, []);
+  const {products, Categories} = useCallItem();
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.header}>
@@ -47,19 +31,32 @@ const HomeScreen = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.container__category}>
             <Text>Categories</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AllCategory')}>
               <Text>get all</Text>
             </TouchableOpacity>
           </View>
-          <Text>
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            áddddddddddddddddddddđaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </Text>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
+            data={Categories}
+            renderItem={({item}) => {
+              return (
+                <View style={styles.item__categories}>
+                  <TouchableOpacity style={{alignItems: 'center'}}>
+                    <Image
+                      style={styles.img__category}
+                      source={{uri: item.imageCategory}}
+                    />
+                    <Text numberOfLines={1}>{item.categoryName}</Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }}
+            keyExtractor={item => item._id}
+          />
           <View style={styles.container__product}>
             <Text>Top selling</Text>
-            <TouchableOpacity>
-              <Text>get all</Text>
-            </TouchableOpacity>
           </View>
           <View style={{flex: 5}}>
             <FlatList
@@ -105,6 +102,20 @@ const HomeScreen = ({navigation}) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  img__category: {
+    width: 56,
+    height: 56,
+    borderRadius: 40,
+  },
+
+  item__categories: {
+    marginLeft: 20,
+    height: HEIGHT__SCREEN * 0.1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    width: WIDTH__SCREEN * 0.3,
+  },
+
   item__container: {
     flex: 1,
     flexDirection: 'row',
@@ -126,8 +137,7 @@ const styles = StyleSheet.create({
   },
   container__product: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+
     marginHorizontal: 20,
   },
   container__category: {

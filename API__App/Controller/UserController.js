@@ -3,16 +3,16 @@ const UserModel = require("../Models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const SignUp = async (userName, numberPhone, Email, password) => {
+const SignUp = async (Email, password) => {
   try {
     const checkUser = await UserModel.findOne({ Email });
     if (checkUser) {
-      throw new Error("Người dùng đã tồn tại!");
+      return { error: true, message: "Người dùng đã tồn tại!" };
     }
     const hash = await bcrypt.hash(password, 10);
     const user = new UserModel({
-      userName,
-      numberPhone,
+      // userName,
+      // numberPhone,
       Email,
       password: hash,
     });
@@ -76,4 +76,24 @@ const getUser = async (isDeleted) => {
   }
 };
 
-module.exports = { SignUp, Login, deleteUser, getUser };
+const updateUser = async (req, res) => {
+  try {
+    const { idUser, userName, numberPhone } = req.body;
+    const user = await UserModel.findOne({ _id: idUser });
+    if (!user) {
+      return res.status(404).json({ message: "Không tìm thấy người dùng!" });
+    }
+    const checkNumberphone = await UserModel.findOne({ numberPhone });
+    if (checkNumberphone && checkNumberphone._id !== idUser) {
+      return res.status(409).json({ message: "Số điện thoại đã tồn tại !" });
+    }
+    user.userName = userName;
+    user.numberPhone = numberPhone;
+    await user.save();
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(500).json({ message: "Lỗi Server !" });
+  }
+};
+
+module.exports = { SignUp, Login, deleteUser, getUser, updateUser };

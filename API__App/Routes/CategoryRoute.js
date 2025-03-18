@@ -61,5 +61,5 @@ route.get("/getCategory", async (req, res) => {
     return res.status(505).json({ message: "Lỗi từ Server !" });
   }
 });
-
+route.get("/getProductByCategory", CategoryController.getProductBycategory);
 module.exports = route;
