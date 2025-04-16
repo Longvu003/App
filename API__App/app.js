@@ -9,6 +9,7 @@ const ProductRoute = require("./Routes/ProductRoutes");
 const CategoryRoute = require("./Routes/CategoryRoute");
 const UserRoute = require("./Routes/UserRoute");
 const mongoose = require("mongoose");
+const cors = require("cors");
 // Creating express object
 const app = express();
 app.use(express.static("Views/"));
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.json());
+app.use(cors({ origin: "*" }));
 
 app.use("/products", ProductRoute);
 app.use("/Categories", CategoryRoute);

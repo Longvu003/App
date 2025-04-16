@@ -62,9 +62,10 @@ const getCategory = async () => {
 };
 
 const getProductBycategory = async (req, res) => {
-  const { Idcategory } = req.body;
+  const { Idcategory } = req.query;
   try {
     const item = await Productmodel.find({ Idcategory: Idcategory });
+
     if (!item) {
       return res
         .status(404)

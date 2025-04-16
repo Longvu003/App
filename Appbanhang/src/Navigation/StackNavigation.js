@@ -8,6 +8,8 @@ import Tabnavigation from './Tabnavigation';
 import SearchScreen from '../Screens/SearchScreen';
 import RegisterScreen from '../Screens/User/RegisterScreen';
 import AllCategory from '../Screens/AllCategory';
+import ProductByCategory from '../Screens/ProductByCategory';
+import CartScreen from '../Screens/CartScreen';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   return (
@@ -21,6 +23,11 @@ const StackNavigation = () => {
           <Stack.Screen name="SearchScreen" component={SearchScreen} />
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="AllCategory" component={AllCategory} />
+          <Stack.Screen
+            name="ProductByCategory"
+            component={ProductByCategory}
+          />
+          <Stack.Screen name="CartScreen" component={CartScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
