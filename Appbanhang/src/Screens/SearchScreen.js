@@ -1,12 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import React from 'react';
+import useProduct from '../Hooks/ContextApi';
 
 const SearchScreen = () => {
-  return (
-    <View>
-      <Text>SearchScreen</Text>
-    </View>
-  );
+  return <View></View>;
 };
 
 export default SearchScreen;

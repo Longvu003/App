@@ -78,17 +78,18 @@ const getUser = async (isDeleted) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { idUser, userName, numberPhone } = req.body;
+    const { idUser, ...update } = req.body;
     const user = await UserModel.findOne({ _id: idUser });
     if (!user) {
       return res.status(404).json({ message: "Không tìm thấy người dùng!" });
     }
-    const checkNumberphone = await UserModel.findOne({ numberPhone });
-    if (checkNumberphone && checkNumberphone._id !== idUser) {
-      return res.status(409).json({ message: "Số điện thoại đã tồn tại !" });
+    if (update.numberPhone) {
+      const checkNumberphone = await UserModel.findOne({ numberPhone });
+      if (checkNumberphone && checkNumberphone._id !== idUser) {
+        return res.status(409).json({ message: "Số điện thoại đã tồn tại !" });
+      }
     }
-    user.userName = userName;
-    user.numberPhone = numberPhone;
+    Object.assign(user, update);
     await user.save();
     return res.status(200).json({ user });
   } catch (error) {
