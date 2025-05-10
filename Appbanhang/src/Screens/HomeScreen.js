@@ -22,6 +22,10 @@ const HomeScreen = ({navigation}) => {
   const handleCategory = async Idcategory => {
     navigation.navigate('ProductByCategory', {Idcategory});
   };
+
+  const handleDetailProduct = idProduct => {
+    navigation.navigate('ProductDetail', {idProduct});
+  };
   useFocusEffect(
     useCallback(() => {
       CallCategory(), CallProduct();
@@ -87,7 +91,9 @@ const HomeScreen = ({navigation}) => {
           )}
           renderItem={({item}) => (
             <View style={styles.item__container}>
-              <TouchableOpacity style={styles.item__product}>
+              <TouchableOpacity
+                onPress={() => handleDetailProduct(item._id)}
+                style={styles.item__product}>
                 <Image
                   style={styles.img__product}
                   source={{uri: item.img[0]}}

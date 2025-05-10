@@ -84,4 +84,17 @@ router.delete("/deleteProduct", async (req, res) => {
     return res.status(500).json({ success: false, message: "Lỗi từ server" });
   }
 });
+
+router.get("/getProductById", async (req, res) => {
+  try {
+    const { idProduct } = req.query;
+    const item = await productController.getProductById(idProduct);
+    if (item.error) {
+      return res.status(404).json({ message: item.message });
+    }
+    return res.status(200).json({ item });
+  } catch (error) {
+    return res.status(500).json({ message: "Lỗi hệ thống !" });
+  }
+});
 module.exports = router;

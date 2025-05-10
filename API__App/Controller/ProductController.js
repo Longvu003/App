@@ -63,8 +63,7 @@ const deleteProduct = async (idProduct) => {
   try {
     const product = await ProductModel.findOne({ _id: idProduct });
     if (!product) {
-      console.log("Không tìm thấy sản phẩm");
-      return null;
+      return { message: "Không tìm thấy sản phẩm", error: true };
     }
     product.isDeleted = true;
     await product.save();
@@ -74,4 +73,25 @@ const deleteProduct = async (idProduct) => {
   }
 };
 
-module.exports = { addProduct, getProduct, updateProduct, deleteProduct };
+const getProductById = async (idProduct) => {
+  try {
+    const item = await ProductModel.findOne({ _id: idProduct });
+    if (!item) {
+      return {
+        error: true,
+        message: "Không tìm thấy sản phẩm !",
+      };
+    }
+    return item;
+  } catch (error) {
+    return { error: true };
+  }
+};
+
+module.exports = {
+  addProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct,
+  getProductById,
+};

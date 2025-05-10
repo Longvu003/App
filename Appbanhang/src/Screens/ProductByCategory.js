@@ -13,21 +13,19 @@ import {useCallback, useEffect, useState} from 'react';
 const ProductByCategory = ({route}) => {
   const {Idcategory} = route.params;
   const {CallProductByCategory, productsBycategory} = useProduct();
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   useFocusEffect(
     useCallback(() => {
       CallProductByCategory(Idcategory);
-      setData(productsBycategory);
     }, [Idcategory]),
   );
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
-        {data ? (
+        {productsBycategory ? (
           <FlatList
             removeClippedSubviews={false}
-            data={data}
+            data={productsBycategory}
             renderItem={({item}) => {
               return (
                 <View>

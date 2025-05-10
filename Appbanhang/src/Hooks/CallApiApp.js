@@ -1,12 +1,13 @@
 import axios from 'axios';
 import ipconfig from '../IpApp';
 import {createContext, useState, useCallback, useEffect} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
 const ProductContext = createContext();
 export const CallApiApp = ({children}) => {
   const [products, setProducts] = useState([]);
   const [Categories, setCategories] = useState([]);
   const [productsBycategory, setProductsBycategory] = useState([]);
+  const [productsById, setProductsById] = useState([]);
+
   const CallProduct = async () => {
     try {
       const respone = await axios.get(`${ipconfig}/products/getProduct`);
@@ -40,6 +41,19 @@ export const CallApiApp = ({children}) => {
       console.log(error);
     }
   };
+
+  const getProductById = async idProduct => {
+    try {
+      const response = await axios.get(`${ipconfig}/products/getProductById`, {
+        params: {idProduct},
+      });
+      setProductsById(response.data.item);
+      return response.data.item;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -49,6 +63,8 @@ export const CallApiApp = ({children}) => {
         CallCategory,
         CallProduct,
         CallProductByCategory,
+        getProductById,
+        productsById,
       }}>
       {children}
     </ProductContext.Provider>

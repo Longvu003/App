@@ -10,6 +10,7 @@ import RegisterScreen from '../Screens/User/RegisterScreen';
 import AllCategory from '../Screens/AllCategory';
 import ProductByCategory from '../Screens/ProductByCategory';
 import CartScreen from '../Screens/CartScreen';
+import ProductDetail from '../Screens/ProductDetail';
 const Stack = createNativeStackNavigator();
 const StackNavigation = () => {
   return (
@@ -28,6 +29,7 @@ const StackNavigation = () => {
             component={ProductByCategory}
           />
           <Stack.Screen name="CartScreen" component={CartScreen} />
+          <Stack.Screen name="ProductDetail" component={ProductDetail} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

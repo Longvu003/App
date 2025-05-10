@@ -19,11 +19,9 @@ const AllCategory = ({navigation}) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const {Categories, CallCategory} = useProduct();
   const handleGetProductbyCategory = async Idcategory => {
-    getProductbyCategory(Idcategory);
-    navigation.navigate('ProductByCategory');
+    navigation.navigate('ProductByCategory', {Idcategory});
   };
   const isFocused = useIsFocused();
-
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={{flex: 1}}>
