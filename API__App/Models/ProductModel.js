@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 
 const ProductModel = new Schema({
@@ -13,6 +14,14 @@ const ProductModel = new Schema({
   isDeleted: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  option: [
+    {
+      size: { type: mongoose.Schema.Types.ObjectId, ref: "size" },
+      color: { type: mongoose.Schema.Types.ObjectId, ref: "color" },
+      quantity: Number,
+      price: Number,
+    },
+  ],
 });
 
 module.exports = mongoose.model("Product", ProductModel);
